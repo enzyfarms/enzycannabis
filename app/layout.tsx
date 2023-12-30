@@ -6,19 +6,19 @@ import { Analytics } from "./components/analytics";
 
 export const metadata: Metadata = {
   title: {
-    default: "chronark.com",
-    template: "%s | chronark.com",
+    default: "enzycannabis.com",
+    template: "%s | enzycannabis.com",
   },
-  description: "Co-founder of unkey.dev and founder of planetfall.io",
+  description: "Enzy Farms Cannabis",
   openGraph: {
-    title: "chronark.com",
+    title: "enzycannabis.com",
     description:
-      "Co-founder of unkey.dev and founder of planetfall.io",
-    url: "https://chronark.com",
-    siteName: "chronark.com",
+      "Enzy Farms Cannabis",
+    url: "https://enzycannabis.com",
+    siteName: "enzycannabis.com",
     images: [
       {
-        url: "https://chronark.com/og.png",
+        url: "",
         width: 1920,
         height: 1080,
       },

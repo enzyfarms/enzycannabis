@@ -16,9 +16,9 @@ const computedFields = {
 	},
 };
 
-export const Project = defineDocumentType(() => ({
-	name: "Project",
-	filePathPattern: "./projects/**/*.mdx",
+export const Menu = defineDocumentType(() => ({
+	name: "Menu",
+	filePathPattern: "./menus/**/*.mdx",
 	contentType: "mdx",
 
 	fields: {

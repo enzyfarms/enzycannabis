@@ -1,5 +1,5 @@
 "use client";
-import { Github, Mail, Twitter } from "lucide-react";
+import { Facebook, Github, Instagram, Mail, Twitter } from "lucide-react";
 import Link from "next/link";
 import { Navigation } from "../components/nav";
 import { Card } from "../components/card";
@@ -7,21 +7,21 @@ import { Card } from "../components/card";
 const socials = [
 	{
 		icon: <Twitter size={20} />,
-		href: "https://twitter.com/chronark_",
+		href: "https://twitter.com/EnzyFarms",
 		label: "Twitter",
-		handle: "@chronark_",
+		handle: "@enzyfarms",
 	},
 	{
 		icon: <Mail size={20} />,
-		href: "mailto:dev@chronark.com",
+		href: "mailto:social@enzycannabis.com",
 		label: "Email",
-		handle: "dev@chronark.com",
+		handle: "social@enzycannabis.com",
 	},
 	{
-		icon: <Github size={20} />,
-		href: "https://github.com/chronark",
-		label: "Github",
-		handle: "chronark",
+		icon: <Instagram size={20} />,
+		href: "https://www.instagram.com/enzyfarms/",
+		label: "Instagram",
+		handle: "@enzyfarms",
 	},
 ];
 
