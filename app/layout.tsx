@@ -6,7 +6,7 @@ import { Analytics } from "./components/analytics";
 
 export const metadata: Metadata = {
   title: {
-    default: "enzycannabis.com",
+    default: "Enzy Farms",
     template: "%s | enzycannabis.com",
   },
   description: "Enzy Farms Cannabis",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "Chronark",
+    title: "Enzy Farms",
     card: "summary_large_image",
   },
   icons: {
