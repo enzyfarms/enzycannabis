@@ -1,19 +1,20 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const AgeGate = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const ageConfirmed = localStorage.getItem('ageConfirmed');
+    const ageConfirmed = Cookies.get('ageConfirmed');
     if (ageConfirmed !== 'true') {
       setIsVisible(true);
     }
   }, []);
 
   const handleConfirm = () => {
-    localStorage.setItem('ageConfirmed', 'true');
+    Cookies.set('ageConfirmed', 'true', { expires: 7 }); // Cookie expires in 7 days
     setIsVisible(false);
   };
 
