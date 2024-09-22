@@ -1,23 +1,23 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import dynamic from 'next/dynamic';
 import { Navigation } from "../components/nav";
 import { Redis } from "@upstash/redis";
 import { Eye } from "lucide-react";
 
 const redis = Redis.fromEnv();
 
-export default function Page() {
-  useEffect(() => {
-    // Load the Weedmaps embed script
-    const script = document.createElement('script');
-    script.src = "https://enzyfarms.wm.store/static/js/embed.js";
-    script.async = true;
-    document.body.appendChild(script);
+// Dynamically import the iframe component with ssr disabled
+const WeedmapsIframe = dynamic(
+  () => import('../components/WeedmapsIframe'),
+  { ssr: false }
+);
 
-    return () => {
-      // Clean up the script when the component unmounts
-      document.body.removeChild(script);
-    };
+export default function Page() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
   }, []);
 
   return (
@@ -34,13 +34,7 @@ export default function Page() {
         </div>
         <div className="w-full h-px bg-zinc-800" />
         <div className="w-full h-[600px]">
-          <iframe 
-            src="https://enzyfarms.wm.store" 
-            width="100%" 
-            height="100%" 
-            style={{border: 'none'}}
-            title="Weedmaps Menu"
-          />
+          {isMounted && <WeedmapsIframe />}
         </div>
       </div>
     </div>
