@@ -1,0 +1,28 @@
+import React, { useEffect } from 'react';
+
+const WeedmapsIframe: React.FC = () => {
+  useEffect(() => {
+    // Load the Weedmaps embed script
+    const script = document.createElement('script');
+    script.src = "https://enzyfarms.wm.store/static/js/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Clean up the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  return (
+    <iframe 
+      src="https://enzyfarms.wm.store" 
+      width="100%" 
+      height="100%" 
+      style={{border: 'none'}}
+      title="Weedmaps Menu"
+    />
+  );
+};
+
+export default WeedmapsIframe;
