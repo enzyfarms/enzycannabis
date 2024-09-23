@@ -26,28 +26,24 @@ export default function Page() {
   }, [iframeStatus]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-900">
+    <div className="flex flex-col h-screen bg-zinc-900 overflow-hidden">
       <Navigation />
-      <main className="flex-grow pt-16 sm:pt-20 pb-8 px-4">
-        <div className="container mx-auto h-full max-w-6xl">
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden h-[calc(100vh-8rem)] sm:h-[calc(100vh-10rem)] md:h-[calc(100vh-12rem)]">
-            <div 
-              ref={iframeContainerRef} 
-              className="w-full h-full"
-            >
-              {iframeStatus === 'loading' && (
-                <div className="flex flex-col items-center justify-center h-full bg-zinc-100">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-600 mb-4"></div>
-                  <p className="text-zinc-600 text-xl">Loading menu...</p>
-                </div>
-              )}
-              {iframeStatus === 'error' && (
-                <div className="flex items-center justify-center h-full bg-zinc-100">
-                  <p className="text-red-600 text-xl">Failed to load menu. Please try again later.</p>
-                </div>
-              )}
+      <main className="flex-grow relative">
+        <div 
+          ref={iframeContainerRef} 
+          className="absolute inset-0 w-full h-full"
+        >
+          {iframeStatus === 'loading' && (
+            <div className="flex flex-col items-center justify-center h-full bg-zinc-100">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-600 mb-4"></div>
+              <p className="text-zinc-600 text-xl">Loading menu...</p>
             </div>
-          </div>
+          )}
+          {iframeStatus === 'error' && (
+            <div className="flex items-center justify-center h-full bg-zinc-100">
+              <p className="text-red-600 text-xl">Failed to load menu. Please try again later.</p>
+            </div>
+          )}
         </div>
       </main>
     </div>
