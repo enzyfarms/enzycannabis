@@ -1,13 +1,36 @@
-import Link from "next/link";
-import React from "react";
+'use client';
+
+import React, { useEffect, useState } from "react";
 import Script from "next/script";
 import { Navigation } from "../components/nav";
-import { Redis } from "@upstash/redis";
-import { Eye } from "lucide-react";
 
-const redis = Redis.fromEnv();
+declare global {
+  interface Window {
+    WeemountEmbed?: {
+      mount: (selector: string) => void;
+    };
+  }
+}
 
 export default function Page() {
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [mountAttempted, setMountAttempted] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.WeemountEmbed) {
+      console.log("WeemountEmbed found in window object");
+      try {
+        window.WeemountEmbed.mount('#wm-embed-container');
+        console.log("Mount function called");
+        setMountAttempted(true);
+      } catch (error) {
+        console.error("Error calling mount function:", error);
+      }
+    } else {
+      console.log("WeemountEmbed not found in window object");
+    }
+  }, [scriptLoaded]);
+
   return (
     <div className="relative pb-16">
       <Navigation />
@@ -21,11 +44,39 @@ export default function Page() {
           </p>
         </div>
         <div className="w-full h-px bg-zinc-800" />
-        <Script
-          src="https://enzyfarms.wm.store/static/js/embed.js"
-          strategy="afterInteractive"
-        />
+        
+        <div id="wm-embed-container" className="w-full min-h-[500px] bg-zinc-800">
+          {!scriptLoaded && <p className="text-white p-4">Loading embed script...</p>}
+          {scriptLoaded && !mountAttempted && <p className="text-white p-4">Script loaded, waiting for mount...</p>}
+          {mountAttempted && <p className="text-white p-4">Mount attempted. If you see this, the embed might not be working correctly.</p>}
+        </div>
+
+        <div className="mt-4 p-4 bg-zinc-700 text-white">
+          <p>Debug Info:</p>
+          <p>Script Loaded: {scriptLoaded ? 'Yes' : 'No'}</p>
+          <p>Mount Attempted: {mountAttempted ? 'Yes' : 'No'}</p>
+        </div>
       </div>
+
+      <Script
+        src="https://enzyfarms.wm.store/static/js/embed.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          console.log("Script loaded");
+          setScriptLoaded(true);
+          if (window.WeemountEmbed) {
+            try {
+              window.WeemountEmbed.mount('#wm-embed-container');
+              console.log("Mount function called in onLoad");
+              setMountAttempted(true);
+            } catch (error) {
+              console.error("Error calling mount function in onLoad:", error);
+            }
+          } else {
+            console.log("WeemountEmbed not found in window object in onLoad");
+          }
+        }}
+      />
     </div>
   );
 }
