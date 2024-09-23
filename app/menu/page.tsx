@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navigation } from '../components/nav';
 
 export default function Page() {
   const [iframeStatus, setIframeStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
   const [shouldLoadIframe, setShouldLoadIframe] = useState(false);
+  const iframeContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // If lazy loading is important, adjust the code as follows
     const iframeObserver = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -18,13 +20,17 @@ export default function Page() {
       { rootMargin: '200px' }
     );
 
-    const iframeContainer = document.querySelector('#iframeContainer');
-    if (iframeContainer) {
-      iframeObserver.observe(iframeContainer);
+    if (iframeContainerRef.current) {
+      iframeObserver.observe(iframeContainerRef.current);
     }
 
     return () => iframeObserver.disconnect();
   }, []);
+
+  // If lazy loading is not critical, you can set shouldLoadIframe to true immediately
+  // useEffect(() => {
+  //   setShouldLoadIframe(true);
+  // }, []);
 
   const handleIframeLoad = () => {
     setIframeStatus('loaded');
@@ -40,13 +46,15 @@ export default function Page() {
       <main className="absolute top-16 left-0 right-0 bottom-0 overflow-auto">
         {iframeStatus === 'loading' && <LoadingState />}
         {iframeStatus === 'error' && <ErrorState onRetry={() => window.location.reload()} />}
-        {shouldLoadIframe && iframeStatus !== 'error' && (
-          <IframeComponent
-            src="https://enzyfarms.wm.store/"
-            onLoad={handleIframeLoad}
-            onError={handleIframeError}
-          />
-        )}
+        <div id="iframeContainer" ref={iframeContainerRef} className="w-full h-full">
+          {shouldLoadIframe && iframeStatus !== 'error' && (
+            <IframeComponent
+              src="https://enzyfarms.wm.store/"
+              onLoad={handleIframeLoad}
+              onError={handleIframeError}
+            />
+          )}
+        </div>
       </main>
     </div>
   );
@@ -91,17 +99,14 @@ function IframeComponent({
   onError: () => void;
 }) {
   return (
-    <div id="iframeContainer" className="w-full h-full">
-      <iframe
-        src={src}
-        onLoad={onLoad}
-        onError={onError}
-        title="Online Store"
-        className="w-full h-full"
-        style={{ border: 'none' }}
-        loading="lazy"
-        aria-label="Online store iframe"
-      ></iframe>
-    </div>
+    <iframe
+      src={src}
+      onLoad={onLoad}
+      onError={onError}
+      title="Online Store"
+      className="w-full h-full border-none"
+      loading="lazy"
+      aria-label="Online store iframe"
+    ></iframe>
   );
 }
