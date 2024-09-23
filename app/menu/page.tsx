@@ -15,6 +15,7 @@ export default function Page() {
         iframe.style.width = '100%';
         iframe.style.height = '100%';
         iframe.style.border = 'none';
+        iframe.style.overflow = 'auto'; // Enable scrolling within iframe
         
         iframeContainerRef.current.appendChild(iframe);
         setIframeCreated(true);
@@ -23,14 +24,18 @@ export default function Page() {
   }, [iframeCreated]);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen bg-zinc-900">
       <Navigation />
-      <div ref={iframeContainerRef} className="flex-grow w-full bg-zinc-800">
-        {!iframeCreated && (
-          <div className="flex items-center justify-center h-full">
-            <p className="text-white text-xl">Loading menu...</p>
+      <div className="flex-grow container mx-auto px-4 py-8">
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div ref={iframeContainerRef} className="w-full h-[800px]">
+            {!iframeCreated && (
+              <div className="flex items-center justify-center h-full bg-zinc-100">
+                <p className="text-zinc-600 text-xl">Loading menu...</p>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
