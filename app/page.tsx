@@ -57,7 +57,7 @@ export default function Home() {
           width={512}
           height={398}
           alt="Logo"
-          className="w-32 h-auto sm:w-48 md:w-64 lg:w-96"
+          className="w-48 h-auto sm:w-64 md:w-96 lg:w-160"
           priority // Ensure image loads with higher priority
         />
       </h1>
