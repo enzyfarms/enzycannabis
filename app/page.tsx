@@ -21,7 +21,7 @@ export default function Home() {
       <link rel="preload" href="/Logo.png" as="image" />
 
       <nav className="z-10 my-8 md:my-16 animate-fade-in">
-        <ul className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-4">
+        <ul className="flex flex-row items-center justify-center gap-6 md:gap-4 flex-nowrap">
           {navigation.map((item) =>
             item.name === "Menu" ? (
               <a
